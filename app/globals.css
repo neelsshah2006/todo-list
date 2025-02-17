@@ -9,13 +9,76 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #171717;
     --foreground: #ededed;
   }
+}
+
+* {
+  user-select: none;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Montserrat", serif;
+}
+
+@media (orientation: portrait) {
+  .taskCreaterForm {
+    padding-inline: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  #taskName {
+    width: 80vw;
+  }
+
+  #taskDesc {
+    width: 80vw;
+    height: 12vh;
+  }
+
+  .task {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .taskDetails {
+    width: 90vw;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #addTask {
+    width: 80vw;
+  }
+
+  .tDesc {
+    font-size: small;
+    width: 70vw;
+    word-break: break-all;
+    word-wrap: break-word;
+    max-width: 70vw;
+  }
+
+  .taskButtons {
+    width: 80vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .taskButtons>button {
+    width: 80vw;
+  }
+}
+
+.amber {
+  border: 2px solid yellow;
 }
