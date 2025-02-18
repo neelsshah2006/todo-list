@@ -7,11 +7,11 @@ const Page = () => {
   const [taskDesc, setTaskDesc] = useState("");
   const [mainTask, setMainTask] = useState([]);
   const [completedTasks, setCompletedTasks] = useState(
-    localStorage.getItem("complete") || 0
+    Number(localStorage.getItem("complete")) || 0
   );
   const [pendingTasks, setPendingTasks] = useState(mainTask.length);
   const [totalTasks, setTotalTasks] = useState(
-    localStorage.getItem("total") || 0
+    Number(localStorage.getItem("total")) || 0
   );
   const router = useRouter();
 
