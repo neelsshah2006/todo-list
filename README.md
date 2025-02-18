@@ -14,10 +14,10 @@ A simple and user-friendly **To-Do List** application designed to help users eff
 
 ## 📸 Demo
 Preview on Desktop: <br/>
-![To-Do List Preview](![Desktop](https://github.com/user-attachments/assets/a71a2dcb-7339-4d5b-8b39-660ab2c14696)) 
+(![Desktop](https://github.com/user-attachments/assets/a71a2dcb-7339-4d5b-8b39-660ab2c14696))
 
 Preview on Mobile: <br/>
-![To-Do List Preview](![Screenshot 2025-02-18 131358](https://github.com/user-attachments/assets/6894936e-6bc6-4705-814b-4a2748654241)) 
+(![Screenshot 2025-02-18 131358](https://github.com/user-attachments/assets/6894936e-6bc6-4705-814b-4a2748654241)) 
 
 ## 🎥 Demo Preview
 
