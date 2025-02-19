@@ -9,6 +9,7 @@ const montserrat = Montserrat({
 export const metadata = {
   title: "Todo List",
   description: "A simple todo list app",
+  keywords: "Todo, List, Task, TodoList",
 };
 
 export default function RootLayout({ children }) {

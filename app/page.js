@@ -6,14 +6,21 @@ const Page = () => {
   const [taskName, setTaskName] = useState("");
   const [taskDesc, setTaskDesc] = useState("");
   const [mainTask, setMainTask] = useState([]);
-  const [completedTasks, setCompletedTasks] = useState(
-    Number(localStorage.getItem("complete")) || 0
-  );
+  const [completedTasks, setCompletedTasks] = useState(0);
   const [pendingTasks, setPendingTasks] = useState(mainTask.length);
-  const [totalTasks, setTotalTasks] = useState(
-    Number(localStorage.getItem("total")) || 0
-  );
+  const [totalTasks, setTotalTasks] = useState(0);
   const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setCompletedTasks(Number(localStorage.getItem("complete")) || 0);
+      setTotalTasks(Number(localStorage.getItem("total")) || 0);
+      const savedTasks = JSON.parse(localStorage.getItem("Tasks"));
+      if (savedTasks) {
+        setMainTask(savedTasks);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const handleContextMenu = (event) => {
@@ -32,20 +39,12 @@ const Page = () => {
   }, [mainTask]);
 
   useEffect(() => {
-    localStorage.setItem("total", totalTasks);
-    localStorage.setItem("complete", completedTasks);
-  }, [totalTasks, completedTasks]);
-
-  useEffect(() => {
-    const savedTasks = JSON.parse(localStorage.getItem("Tasks"));
-    if (savedTasks) {
-      setMainTask(savedTasks);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("total", totalTasks);
+      localStorage.setItem("complete", completedTasks);
+      localStorage.setItem("Tasks", JSON.stringify(mainTask));
     }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("Tasks", JSON.stringify(mainTask));
-  }, [mainTask]);
+  }, [totalTasks, completedTasks, mainTask]);
 
   const capitalizeEachLine = (text) => {
     return text
