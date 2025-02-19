@@ -41,7 +41,7 @@ const Edit = () => {
         <meta name="description" content="Edit your task details here" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <div className="flex justify-center items-center w-[100vw] h-[100vh]">
+      <div className="bgclass flex justify-center items-center w-[100vw] h-[100vh]">
         <div className="amber flex flex-col justify-center items-center absolute transition-all duration-500 ease-in-out gap-5 py-20 w-[50%] px-10 rounded-2xl">
           <div className="flex justify-center items-center gap-2 fixed top-0">
             <img src="/favicon.ico" alt="Icon" width="50" />
@@ -68,7 +68,7 @@ const Edit = () => {
                   setTaskName(e.target.value);
                 }}
                 type="text"
-                className="font-semibold w-[100%] text-xl py-2 rounded col-span-3 text-black p-2"
+                className="black font-semibold w-[100%] text-xl py-2 rounded col-span-3 text-black p-2"
               />
             </div>
             <div className="grid grid-cols-4 justify-center items-center gap-5 w-[100%] task">
@@ -86,12 +86,12 @@ const Edit = () => {
                   setTaskDesc(e.target.value);
                 }}
                 rows="2"
-                className="font-semibold w-[100%] text-xl py-2 rounded col-span-3 text-black p-2"
+                className="black font-semibold w-[100%] text-xl py-2 rounded col-span-3 text-black p-2"
               ></textarea>
             </div>
             <button
               type="submit"
-              className="bg-yellow-300 px-10 py-3 text-xl font-extrabold text-black rounded-xl"
+              className="bg-yellow-400 px-10 py-3 text-xl font-extrabold text-black rounded-xl hover:scale-110 transition-all duration-300 ease-in-out"
             >
               Edit Task
             </button>

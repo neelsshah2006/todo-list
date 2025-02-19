@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-    --background: #ffffff;
+    --background: #f3f3f3;
     --foreground: #171717;
 }
 
@@ -13,6 +13,7 @@
         --foreground: #ededed;
     }
 }
+
 
 body {
     color: var(--foreground);
@@ -24,14 +25,25 @@ body {
     border: 2px solid yellow;
 }
 
+.black {
+    outline: 2px solid black;
+}
+
 @media (max-width:1080px) {
-    .task{
+    .task {
         display: flex;
         flex-direction: column;
     }
 
-    .amber{
+    .amber {
         width: 80%;
     }
-    
+
+}
+
+@media (prefers-color-scheme: light) {
+    .amber {
+        background-color: #fafab4;
+        border-color: black;
+    }
 }

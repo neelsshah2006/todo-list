@@ -80,7 +80,7 @@ const Page = () => {
       return (
         <li
           key={i + 1}
-          className="task flex w-[100vw] justify-between gap-2 bg-amber-50 rounded-xl shadow-lg text-black p-3"
+          className="task flex w-[98vw] justify-between gap-2 bg-amber-50 rounded-xl shadow-lg text-black p-3"
         >
           <div className="taskDetails flex flex-col w-[50vw] justify-center items-start py-3 px-5">
             <div className="flex gap-2 justify-center items-center">
@@ -93,7 +93,7 @@ const Page = () => {
               {t.taskDesc}
             </h6>
           </div>
-          <div className="taskButtons flex gap-2 justify-center items-center">
+          <div className="taskButtons flex gap-3 justify-center items-center">
             <button
               className="bg-green-400 transition duration-300 ease-in-out transform font-semibold hover:bg-green-600 hover:scale-110 px-10 py-2 text-xl rounded-lg"
               onClick={(e) => {
@@ -179,23 +179,23 @@ const Page = () => {
         </button>
       </form>
       <hr />
-      <div className="grid grid-flow-col gap-2 p-5">
-        <div className="completedTasks bg-green-400 p-5 rounded-xl shadow-lg text-black">
+      <div className="grid grid-flow-col gap-5 p-5">
+        <div className="completedTasks bg-green-400 p-5 rounded-xl shadow-lg text-black hover:scale-105 transition duration-300 ease-in-out">
           <h2 className="text-5xl font-semibold">{completedTasks}</h2>
           <h3 className="text-l font-semibold">Completed Task</h3>
         </div>
-        <div className="pendingTasks bg-yellow-400 p-5 rounded-xl shadow-lg text-black">
+        <div className="pendingTasks bg-yellow-400 p-5 rounded-xl shadow-lg text-black hover:scale-105 transition duration-300 ease-in-out">
           <h2 className="text-5xl font-semibold">{pendingTasks}</h2>
           <h3 className="text-l font-semibold">Pending Task</h3>
         </div>
-        <div className="pendingTasks bg-gray-50 p-5 rounded-xl shadow-lg text-black">
+        <div className="pendingTasks bg-gray-50 p-5 rounded-xl shadow-lg text-black hover:scale-105 transition duration-300 ease-in-out">
           <h2 className="text-5xl font-semibold">{totalTasks}</h2>
           <h3 className="text-l font-semibold">Total Task</h3>
         </div>
       </div>
       <hr />
       <div className="flex flex-col justify-center items-center gap-5 text-xl mt-3">
-        <h2 className="text-2xl font-bold">Tasks: </h2>
+        <h2 className="text-2xl font-bold">Pending Tasks: </h2>
         <ul className="flex flex-col width-[100vw] gap-2">{renderTask}</ul>
       </div>
     </>
