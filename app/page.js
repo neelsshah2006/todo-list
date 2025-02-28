@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 const Page = () => {
   const [taskName, setTaskName] = useState("");
   const [taskDesc, setTaskDesc] = useState("");
+  const [completed, setCompleted] = useState([]);
   const [mainTask, setMainTask] = useState([]);
   const [completedTasks, setCompletedTasks] = useState(0);
   const [pendingTasks, setPendingTasks] = useState(mainTask.length);
@@ -16,8 +17,12 @@ const Page = () => {
       setCompletedTasks(Number(localStorage.getItem("complete")) || 0);
       setTotalTasks(Number(localStorage.getItem("total")) || 0);
       const savedTasks = JSON.parse(localStorage.getItem("Tasks"));
+      const completedTasks = JSON.parse(localStorage.getItem("completeTasks"));
       if (savedTasks) {
         setMainTask(savedTasks);
+      }
+      if (completedTasks) {
+        setCompleted(completedTasks);
       }
     }
   }, []);
@@ -43,8 +48,9 @@ const Page = () => {
       localStorage.setItem("total", totalTasks);
       localStorage.setItem("complete", completedTasks);
       localStorage.setItem("Tasks", JSON.stringify(mainTask));
+      localStorage.setItem("completeTasks", JSON.stringify(completed));
     }
-  }, [totalTasks, completedTasks, mainTask]);
+  }, [totalTasks, completedTasks, mainTask, completed]);
 
   const capitalizeEachLine = (text) => {
     return text
@@ -60,7 +66,16 @@ const Page = () => {
     setMainTask(tempTask);
   };
 
+  const completedDeleteHandler = (e, i) => {
+    e.preventDefault();
+    let tempTask = [...completed];
+    tempTask.splice(i, 1);
+    setCompleted(tempTask);
+    setCompletedTasks(completedTasks - 1);
+  };
+
   const completeHandler = async (e, i) => {
+    setCompleted([...completed, mainTask[i]]);
     deleteHandler(e, i);
     setCompletedTasks(completedTasks + 1);
   };
@@ -72,6 +87,11 @@ const Page = () => {
         taskName
       )}&description=${encodeURIComponent(taskDesc)}&index=${i}`
     );
+  };
+
+  const notCompletedHandler = (e, i) => {
+    setMainTask([...mainTask, completed[i]]);
+    completedDeleteHandler(e, i);
   };
 
   let renderTask = <h2>No Task Available</h2>;
@@ -125,6 +145,49 @@ const Page = () => {
     });
   }
 
+  let renderCompletedTask = <h2>No Task Completed</h2>;
+  if (completed.length > 0) {
+    renderCompletedTask = completed.map((t, i) => {
+      return (
+        <li
+          key={i + 1}
+          className="task flex w-[98vw] justify-between gap-2 bg-green-50 rounded-xl shadow-lg text-black p-3"
+        >
+          <div className="taskDetails flex flex-col w-[50vw] justify-center items-start py-3 px-5">
+            <div className="flex gap-2 justify-center items-center">
+              <div className="tNum px-4 py-2 rounded-full bg-green-200">
+                {i + 1}
+              </div>
+              <h5 className="tName font-semibold text-xl">{t.taskName}</h5>
+            </div>
+            <h6 className="tDesc ml-[50px] max-w-[50vw] font-semibold text-sm">
+              {t.taskDesc}
+            </h6>
+          </div>
+          <div className="taskButtons flex gap-3 justify-center items-center">
+            <button
+              className="bg-amber-400 transition duration-300 ease-in-out transform font-semibold hover:bg-amber-600 hover:scale-110 px-10 py-2 text-xl rounded-lg"
+              onClick={(e) => {
+                notCompletedHandler(e, i);
+              }}
+            >
+              Incomplete Task
+            </button>
+            <button
+              className="bg-red-400 transition duration-300 ease-in-out transform font-semibold hover:scale-110 hover:bg-red-600 text-xl px-10 py-2 rounded-lg"
+              onClick={(e) => {
+                completedDeleteHandler(e, i);
+                setTotalTasks(totalTasks - 1);
+              }}
+            >
+              Delete Task
+            </button>
+          </div>
+        </li>
+      );
+    });
+  }
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (taskName === "" || taskDesc === "") {
@@ -143,12 +206,7 @@ const Page = () => {
         <h1 className="text-4xl font-bold text-center py-5">TodoList</h1>
       </div>
       <hr />
-      <form
-        className="taskCreaterForm flex justify-center items-baseline gap-10 p-10"
-        onSubmit={(e) => {
-          submitHandler(e);
-        }}
-      >
+      <form className="taskCreaterForm flex justify-center items-baseline gap-10 p-10">
         <input
           type="text"
           value={taskName}
@@ -171,12 +229,30 @@ const Page = () => {
           id="taskDesc"
           placeholder="Enter Task Description Here"
         />
-        <button
-          id="addTask"
-          className="px-4 py-2 text-2xl text-black bg-green-400 hover:bg-green-600 rounded-xl font-bold shadow-lg transition duration-300 ease-in-out transform hover:scale-110"
-        >
-          Add Task
-        </button>
+        <div className="flex flex-col gap-2" id="taskButtons">
+          <button
+            id="addTask"
+            className="px-4 py-2 text-2xl text-black bg-green-400 hover:bg-green-600 rounded-xl font-bold shadow-lg transition duration-300 ease-in-out transform hover:scale-110"
+            onClick={(e) => {
+              submitHandler(e);
+            }}
+          >
+            Add Task
+          </button>
+          <button
+            id="removeAllTasks"
+            onClick={(e) => {
+              e.preventDefault();
+              setMainTask([]);
+              setCompleted([]);
+              setCompletedTasks(0);
+              setTotalTasks(0);
+            }}
+            className="bg-red-400 text-black transition duration-300 ease-in-out transform font-extrabold hover:scale-110 hover:bg-red-600 text-xl px-10 py-2 rounded-lg"
+          >
+            Remove all Tasks
+          </button>
+        </div>
       </form>
       <hr />
       <div className="grid grid-flow-col gap-5 p-5">
@@ -194,9 +270,17 @@ const Page = () => {
         </div>
       </div>
       <hr />
-      <div className="flex flex-col justify-center items-center gap-5 text-xl mt-3">
+      <div className="flex flex-col justify-center items-center gap-5 text-xl my-3">
         <h2 className="text-2xl font-bold">Pending Tasks: </h2>
+
         <ul className="flex flex-col width-[100vw] gap-2">{renderTask}</ul>
+      </div>
+      <hr />
+      <div className="flex flex-col justify-center items-center gap-5 text-xl mt-3">
+        <h2 className="text-2xl font-bold">Completed Tasks: </h2>
+        <ul className="flex flex-col width-[100vw] gap-2">
+          {renderCompletedTask}
+        </ul>
       </div>
     </>
   );
